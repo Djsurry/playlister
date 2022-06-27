@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Playlister (I hardly know her)</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='main.js')}}"></script>
+</head>
+<body>
+    <h1>playlister (i hardly know her)</h1>
+    <input id="url">
+    <button id="go">go listen</button> <p style="display: inline;">or</p> <button id="based">be based</button>
+    <p id="status"></p>
+    <div id="audioContainer"></div>
+    <input style="display: none;" type="range" id="volume" min="0" max="1" step="0.01" value="1" />
+    <button style="display: none;" id="play" onClick="play()">pause/play</button>
+    <button style="display: none;" id="skip" onClick="skip()">skip</button>
+    <script>
+        let audios = [];
+        let playlist;
+        let inProcess = false;
+        $("#based").click(() => {
+            $("#url").val("https://www.youtube.com/playlist?list=PLBRIO7dbinFq7Xf_O9rjjUA5HE8fxE6c4")
+            $("#go").click()
+        })
+        $("#go").click(async () => {
+            $("#status").html("working on it... may take a while for first song")
+            let song = await getSong($("#url").val())
+            let audio = createNode(song);
+            audio.play()
+            $('#status').html("playing ^_^")
+            $('#play').css("display", "block")
+            $('#volume').css("display", "block")
+            audios.push(audio);
+            setInterval(loop, 5000);
+        })
+        $('#volume').on('change', function() {
+            audios[0].volume = this.value;
+        });
+
+    </script>
+</body>
+</html>
