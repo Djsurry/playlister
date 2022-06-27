@@ -27,7 +27,7 @@ def getSong():
 
     print(playlist)
     if re.match(regex, playlist) is None:
-        return 'kys irl'
+        return 'ur a good person dw'
     # yt-dlp --flat-playlist   https://www.youtube.com/playlist?list=PLBRIO7dbinFq7Xf_O9rjjUA5HE8fxE6c4
 
     resp = check_output(["yt-dlp", "--flat-playlist", playlist]).decode()
