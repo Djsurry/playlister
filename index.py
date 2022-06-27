@@ -50,9 +50,7 @@ def getSong():
     enc=b64encode(f.read())
     f.close()
     print(f"*-*-*-*-*-*-*- FINISHED converting -*-*-*-*-*-*-*-")
-    call(["rm", f"{name}.wav"])
-    call(["rm", f"{name}.webm"])
-    call(["rm", f"{name}.*.webm"])
+    call(f"find -type f -name '*{name}*' -delete".split())
     return enc
 
 app.run(port=8080, debug=True)
