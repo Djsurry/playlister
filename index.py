@@ -50,7 +50,7 @@ def getSong():
     enc=b64encode(f.read())
     f.close()
     print(f"*-*-*-*-*-*-*- FINISHED converting -*-*-*-*-*-*-*-")
-    call(f"find -type f -name '*{name}*' -delete".split())
+    call(f"rm *{name}*", shell=True)
     return enc
 
-app.run(port=8080, debug=True)
+app.run(port=1234, debug=True, host="0.0.0.0")

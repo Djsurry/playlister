@@ -13,7 +13,7 @@ function createNode(b64) {
     source.setAttribute("src", "data:audio/wav;base64," + b64)
     const element = document.getElementById("audioContainer");
     element.appendChild(audio);
-    audio.onended = () => {audio.nextSibling.play();audio.remove();audios=audios.splice(0,1)};
+    audio.onended = (e) => {e.target.nextSibling.volume=$('#volume').val();e.target.nextSibling.play();e.target.remove();audios.splice(0,1)};
     return audio
 }
 
@@ -40,6 +40,7 @@ function play() {
 function skip() {
     audios[0].remove();
     audios.splice(0,1);
+    audios[0].volume = $("#volume").val();
     audios[0].play()
     if (audios.length == 1) {
         $("#skip").css("display", "none")

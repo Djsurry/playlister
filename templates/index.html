@@ -11,7 +11,7 @@
 <body>
     <h1>playlister (i hardly know her)</h1>
     <input id="url">
-    <button id="go">go listen</button> <p style="display: inline;">or</p> <button id="based">be based</button>
+    <button id="go">go listen this</button> <p style="display: inline;">or</p> <button id="based">uk the one</button>
     <p id="status"></p>
     <div id="audioContainer"></div>
     <input style="display: none;" type="range" id="volume" min="0" max="1" step="0.01" value="1" />
@@ -37,6 +37,8 @@
             setInterval(loop, 5000);
         })
         $('#volume').on('change', function() {
+            console.log('xxdxdd ' + this.value)
+            console.log(audios[0])
             audios[0].volume = this.value;
         });
 
