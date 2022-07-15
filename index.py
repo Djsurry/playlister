@@ -40,7 +40,7 @@ def getSong():
     while 1:
         vidToDownload = random.randint(1, int(n))
         print(f"-*-*-*-*-*-*-*- GOT NUMBER OF VIDS {n} AND WHICH TO DL {vidToDownload}")
-        resp = check_output(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist])
+        resp = check_output(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist]).decode()
         print(f"*-*-*-*-*-*-*- FINISHED yt-dlp -*-*-*-*-*-*-*-")
         call(["ffmpeg", "-i", f"{name}.webm", f"{name}.wav"])
         print(f"*-*-*-*-*-*-*- FINISHED ffmpeg -*-*-*-*-*-*-*-")
