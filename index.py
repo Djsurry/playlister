@@ -40,7 +40,7 @@ def getSong():
     while 1:
         vidToDownload = random.randint(1, int(n))
         print(f"-*-*-*-*-*-*-*- GOT NUMBER OF VIDS {n} AND WHICH TO DL {vidToDownload}")
-        call(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist])
+        resp = check_output(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist])
         print(f"*-*-*-*-*-*-*- FINISHED yt-dlp -*-*-*-*-*-*-*-")
         call(["ffmpeg", "-i", f"{name}.webm", f"{name}.wav"])
         print(f"*-*-*-*-*-*-*- FINISHED ffmpeg -*-*-*-*-*-*-*-")
@@ -51,6 +51,10 @@ def getSong():
     f.close()
     print(f"*-*-*-*-*-*-*- FINISHED converting -*-*-*-*-*-*-*-")
     call(f"rm *{name}*", shell=True)
-    return enc
+    for line in resp.split('\n'):
+        if '[info]' in line:
+            url = line.split(' ')[1][:-1]
+            break
+    return {"data": enc, "url": f"https://youtube.com/watch?v={url}"}
 
 app.run(port=1234, debug=True, host="0.0.0.0")
