@@ -2,6 +2,8 @@ async function getSong(pl) {
     let a;
     playlist = pl;
     a = await Promise.resolve($.get( "/getsong", {url: pl} ))
+    console.log("XDXDD")
+    console.log(a)
     console.log(a.url)
     return a.data;
   
