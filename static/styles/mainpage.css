@@ -1,0 +1,18 @@
+body {
+    background-color: rgb(32, 33, 36);
+}
+
+* {
+    color: rgb(189, 193, 198);
+}
+
+
+input,button {
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #414141;
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 1em;
+}
