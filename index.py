@@ -1,6 +1,6 @@
 import os, requests, random, re, os, string
 from flask import Flask, render_template, request
-from subprocess import check_output, Popen, call
+from subprocess import check_output, Popen, call, CalledProcessError
 from base64 import b64encode
 
 regex = re.compile(
@@ -40,7 +40,10 @@ def getSong():
     while 1:
         vidToDownload = random.randint(1, int(n))
         print(f"-*-*-*-*-*-*-*- GOT NUMBER OF VIDS {n} AND WHICH TO DL {vidToDownload}")
-        resp = check_output(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist]).decode()
+        try:
+            resp = check_output(["yt-dlp", "--playlist-items", str(vidToDownload), "-o", name, playlist]).decode()
+        except CalledProcessError:
+            continue
         print(f"*-*-*-*-*-*-*- FINISHED yt-dlp -*-*-*-*-*-*-*-")
         call(["ffmpeg", "-i", f"{name}.webm", f"{name}.wav"])
         print(f"*-*-*-*-*-*-*- FINISHED ffmpeg -*-*-*-*-*-*-*-")
@@ -51,10 +54,13 @@ def getSong():
     f.close()
     print(f"*-*-*-*-*-*-*- FINISHED converting -*-*-*-*-*-*-*-")
     call(f"rm *{name}*", shell=True)
+    #cleanup 
+    call(f"rm *.wav *.part *.webm", shell=True)
     for line in resp.split('\n'):
         if '[info]' in line:
             url = line.split(' ')[1][:-1]
             break
-    return {"data": enc, "url": f"https://youtube.com/watch?v={url}"}
+  
+    return {"data": enc.decode(), "url": f"https://youtube.com/watch?v={url}"}
 
 app.run(port=1234, debug=True, host="0.0.0.0")

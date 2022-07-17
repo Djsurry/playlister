@@ -19,7 +19,7 @@
     <input style="display: none;" type="range" id="volume" min="0" max="1" step="0.01" value="1" />
     <button style="display: none;" id="play" onClick="play()">pause/play</button>
     <button style="display: none;" id="skip" onClick="skip()">skip</button>
-    <a id="url"></a>
+    <a id="urlS" target="_blank"></a>
     <script>
         let audios = [];
         let playlist;
@@ -33,8 +33,11 @@
             let song = await getSong($("#url").val())
             let audio = createNode(song);
             audio.play()
-            $("#url").html("Current song");
-            $("#url").attr('href', audio.getAttribute('url'));
+            $("#urlS").html("Current song");
+            console.log($("#urlS").html())
+            $("#urlS").attr('href', audio.getAttribute('url'));
+            console.log( audio.getAttribute('url'))
+            console.log($("#urlS").attr('href'))
             $('#status').html("playing ^_^")
             $('#play').css("display", "block")
             $('#volume').css("display", "block")

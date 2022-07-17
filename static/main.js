@@ -2,10 +2,8 @@ async function getSong(pl) {
     let a;
     playlist = pl;
     a = await Promise.resolve($.get( "/getsong", {url: pl} ))
-    console.log("XDXDD")
-    console.log(a)
-    console.log(a.url)
-    return a.data;
+
+    return {data: a.data, url: a.url};
   
 }
 
@@ -13,10 +11,11 @@ function createNode(b64) {
     const audio = document.createElement("audio");
     const source = document.createElement("source");
     audio.appendChild(source);
-    source.setAttribute("src", "data:audio/wav;base64," + b64)
+    source.setAttribute("src", "data:audio/wav;base64," + b64.data)
+    audio.setAttribute("url", b64.url)
     const element = document.getElementById("audioContainer");
     element.appendChild(audio);
-    audio.onended = (e) => {e.target.nextSibling.volume=$('#volume').val();e.target.nextSibling.play();e.target.remove();audios.splice(0,1)};
+    audio.onended = (e) => {$("#urlS").attr("href", e.target.nextSibling.getAttribute('url'));e.target.nextSibling.volume=$('#volume').val();e.target.nextSibling.play();e.target.remove();audios.splice(0,1)};
     return audio
 }
 
@@ -48,4 +47,5 @@ function skip() {
     if (audios.length == 1) {
         $("#skip").css("display", "none")
     }
+    $('#urlS').attr('href', audios[0].getAttribute('url'))
 }
