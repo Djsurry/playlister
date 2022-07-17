@@ -33,7 +33,7 @@
             let song = await getSong($("#url").val())
             let audio = createNode(song);
             audio.play()
-            $("#urlS").html("Current song");
+            $("#urlS").html("current song");
             console.log($("#urlS").html())
             $("#urlS").attr('href', audio.getAttribute('url'));
             console.log( audio.getAttribute('url'))
